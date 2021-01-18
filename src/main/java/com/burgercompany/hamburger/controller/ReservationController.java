@@ -35,20 +35,20 @@ public class ReservationController {
 		try {
 			List<Reservation> reservationList = new ArrayList<Reservation>();
 			if (reservationType == null) {
-				log.info("FROM com.burgercompany.hamburger.controller.ReservationController/getAllReservations() ---> reservationType is null");
+				log.info("getAllReservations() ---> reservationType is null");
 				ReservationRepository.findAll().forEach(reservationList::add);
 			} else {
-				log.info("FROM com.burgercompany.hamburger.controller.ReservationController/getAllReservations()-reservationType is not null");
+				log.info("getAllReservations()-reservationType is not null");
 				ReservationRepository.findByreservationTypeContaining(reservationType).forEach(reservationList::add);
 			}
 			if (reservationList.isEmpty()) {
-				log.info(	"FROM com.burgercompany.hamburger.controller.ReservationController/getAllReservations()-reservationList is empty");
+				log.info(	"getAllReservations()-reservationList is empty");
 				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(reservationList, HttpStatus.OK);
 
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/getAllReservations()-"+ e.getMessage());
+			log.info("getAllReservations()-"+ e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -59,7 +59,7 @@ public class ReservationController {
 		if (reservation.isPresent()) {
 			return new ResponseEntity<>(reservation.get(), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/getReservations()-Reservation not found "+ id);
+			log.info("getReservations()-Reservation not found "+ id);
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 
@@ -69,10 +69,10 @@ public class ReservationController {
 	public ResponseEntity<Reservation> createReservations(@RequestBody Reservation Reservation) {
 		try {
 			Reservation createReservation = ReservationRepository.save(Reservation);
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/createReservations()-Created Reservation");
+			log.info("createReservations()-Created Reservation");
 			return new ResponseEntity<>(createReservation, HttpStatus.OK);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/createReservations()-"+ e.getMessage());
+			log.info("createReservations()-"+ e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -86,10 +86,10 @@ public class ReservationController {
 			reservationUpdate.setreservationType(Reservation.getreservationType());
 			reservationUpdate.setPrice(Reservation.getCost());
 			reservationUpdate.setStatus(Reservation.getStatus());
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/updateReservations()-Updated reservation "+ reservationType);
+			log.info("updateReservations()-Updated reservation "+ reservationType);
 			return new ResponseEntity<>(ReservationRepository.save(currentReservation), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/updateReservations()-Reservation not found "+ reservationType);
+			log.info("updateReservations()-Reservation not found "+ reservationType);
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -98,10 +98,10 @@ public class ReservationController {
 	public ResponseEntity<HttpStatus> deleteReservations(@PathVariable("reservationType") String reservationType) {
 		try {
 			ReservationRepository.deleteByreservationType(reservationType);
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/deleteReservations()-Deleted Reservation "+ reservationType);
+			log.info("deleteReservations()-Deleted Reservation "+ reservationType);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/deleteReservations()-"+ e.getMessage());
+			log.info("deleteReservations()-"+ e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -110,10 +110,10 @@ public class ReservationController {
 	public ResponseEntity<HttpStatus> deleteAllReservations() {
 		try {
 			ReservationRepository.deleteAll();
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/deleteAllReservations()-Deleted all reservations");
+			log.info("deleteAllReservations()-Deleted all reservations");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.ReservationController/deleteAllReservations()-"+ e.getMessage());
+			log.info("deleteAllReservations()-"+ e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

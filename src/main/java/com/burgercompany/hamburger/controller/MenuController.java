@@ -34,20 +34,20 @@ public class MenuController {
 		try {
 			List<Menu> menuList = new ArrayList<Menu>();
 			if (itemName == null) {
-				log.info("FROM com.burgercompany.hamburger.controller.MenuController/getAllMenus()-itemName is null");
+				log.info("getAllMenus()-itemName is null");
 				menuRepository.findAll().forEach(menuList::add);
 			} else {
-				log.info("FROM com.burgercompany.hamburger.controller.MenuController/getAllMenus()-itemName is not null");
+				log.info("getAllMenus()-itemName is not null");
 				menuRepository.findByItemNameContaining(itemName).forEach(menuList::add);
 			}
 			if (menuList.isEmpty()) {
-				log.info("FROM com.burgercompany.hamburger.controller.MenuController/getAllMenus()-menuList is empty");
+				log.info("getAllMenus()-menuList is empty");
 				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(menuList, HttpStatus.OK);
 
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/getAllMenus()-" + e.getMessage());
+			log.info("getAllMenus()-" + e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -58,7 +58,7 @@ public class MenuController {
 		if (menu.isPresent()) {
 			return new ResponseEntity<>(menu.get(), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/getMenus()-Menu item not found "+ id);
+			log.info("getMenus()-Menu item not found "+ id);
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 
@@ -68,10 +68,10 @@ public class MenuController {
 	public ResponseEntity<Menu> createMenu(@RequestBody Menu menu) {
 		try {
 			Menu createMenu = menuRepository.save(menu);
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/createMenu()-Created Menu item");
+			log.info("createMenu()-Created Menu item");
 			return new ResponseEntity<>(createMenu, HttpStatus.OK);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/createMenu()-" + e.getMessage());
+			log.info("createMenu()-" + e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -84,10 +84,10 @@ public class MenuController {
 			menuUpdate.setItemName(menu.getItemName());
 			menuUpdate.setCategory(menu.getCategory());
 			menuUpdate.setPrice(menu.getPrice());
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/updateMenu()-Updated " + itemName);
+			log.info("updateMenu()-Updated " + itemName);
 			return new ResponseEntity<>(menuRepository.save(menuUpdate), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/updateMenu()-The Item not found is "+ itemName);
+			log.info("updateMenu()-The Item not found is "+ itemName);
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -96,10 +96,10 @@ public class MenuController {
 	public ResponseEntity<HttpStatus> deleteMenu(@PathVariable("itemName") String itemName) {
 		try {
 			menuRepository.deleteByItemName(itemName);
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/deleteMenu()-Deleted " + itemName);
+			log.info("deleteMenu()-Deleted " + itemName);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/deleteMenu()-The Item not found is "+ itemName);
+			log.info("deleteMenu()-The Item not found is "+ itemName);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -108,10 +108,10 @@ public class MenuController {
 	public ResponseEntity<HttpStatus> deleteAllMenus() {
 		try {
 			menuRepository.deleteAll();
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/deleteAllMenus()-Deleted items");
+			log.info("deleteAllMenus()-Deleted items");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.info("FROM com.burgercompany.hamburger.controller.MenuController/deleteAllMenus()-"+ e.getMessage());
+			log.info("deleteAllMenus()-"+ e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

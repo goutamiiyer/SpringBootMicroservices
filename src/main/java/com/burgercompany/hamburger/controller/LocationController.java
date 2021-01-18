@@ -35,19 +35,19 @@ public class LocationController {
 		try {
 			List<Location> locationList = new ArrayList<Location>();
 			if (street == null) {
-				log.info("FROM com.burgercompany.hamburger.controller.LocationController/getAllLocations()-street is null");
+				log.info("getAllLocations()-street is null");
 				locationRepository.findAll().forEach(locationList::add);
 			} else {
-				log.info("FROM com.burgercompany.hamburger.controller.LocationController/getAllLocations()-street is not null");
+				log.info("getAllLocations()-street is not null");
 				locationRepository.findByStreetNameContaining(street).forEach(locationList::add);
 			}
 			if (locationList.isEmpty()) {
-				log.info("FROM com.burgercompany.hamburger.controller.LocationController/getAllLocations()-Location list empty");
+				log.info("getAllLocations()-Location list empty");
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(locationList, HttpStatus.OK);
 		} catch (Exception e) {
-			log.debug("FROM com.burgercompany.hamburger.controller.LocationController/getAllLocations()-"+ e.getMessage());
+			log.debug("getAllLocations()-"+ e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -59,7 +59,7 @@ public class LocationController {
 		if (location.isPresent()) {
 			return new ResponseEntity<>(location.get(), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/getLocations()-Location is not found"+ id);
+			log.info("getLocations()-Location is not found"+ id);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -69,10 +69,10 @@ public class LocationController {
 	public ResponseEntity<Location> createLocation(@RequestBody Location location) {
 		try {
 			Location insertLocation = locationRepository.save(location);
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/createLocation()-Inserted Location");
+			log.info("createLocation()-Inserted Location");
 			return new ResponseEntity<>(insertLocation, HttpStatus.OK);
 		} catch (Exception e) {
-			log.debug("FROM com.burgercompany.hamburger.controller.LocationController/createLocation()-"+ e.getMessage());
+			log.debug("createLocation()-"+ e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -88,10 +88,10 @@ public class LocationController {
 			locationUpdate.setState(location.getState());
 			locationUpdate.setPostalcode(location.getPostalCode());
 			locationUpdate.setContact(location.getContact());
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/updateLocation()-Updated Location "+ id);
+			log.info("updateLocation()-Updated Location "+ id);
 			return new ResponseEntity<>(locationRepository.save(currentLocation), HttpStatus.OK);
 		} else {
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/updateLocation()-Location not found "+ id);
+			log.info("updateLocation()-Location not found "+ id);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -101,10 +101,10 @@ public class LocationController {
 	public ResponseEntity<HttpStatus> deleteLocation(@PathVariable("id") String id) {
 		try {
 			locationRepository.deleteById(id);
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/deleteLocation()-Deleted Location: "+ id);
+			log.info("deleteLocation()-Deleted Location: "+ id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.debug("FROM com.burgercompany.hamburger.controller.LocationController/deleteLocation()-Location not found "+ id + e.getMessage());
+			log.debug("deleteLocation()-Location not found "+ id + e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -114,10 +114,10 @@ public class LocationController {
 	public ResponseEntity<HttpStatus> deleteAllLocations() {
 		try {
 			locationRepository.deleteAll();
-			log.info("FROM com.burgercompany.hamburger.controller.LocationController/deleteLocation()-Deleted Locations");
+			log.info("deleteLocation()-Deleted Locations");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			log.debug("FROM com.burgercompany.hamburger.controller.LocationController/deleteLocation()-"+ e.getMessage());
+			log.debug("deleteLocation()-"+ e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
